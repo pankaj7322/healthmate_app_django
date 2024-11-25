@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Healthmate APP</h1>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li style="background-color: #ffe53b;background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%); color:white; border-radius:5px;padding:0.5rem 1rem;">
+                    <a href="{% url 'patient_dashboard' %}">Patient Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'patient_profile' %}">Patient Profile</a>
+                </li>
+                <li>
+                    <a href="{% url 'book_appointment' %}">Book Appointment</a>
+                </li>
+                <li>
+                    <a href="{% url 'patient_login' %}" >Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <section>
+        <div class="welcome">
+            <h1>Welcome, {{ patient.name }}</h1>
+        </div>
+    </section>
+
+</body>
+</html>

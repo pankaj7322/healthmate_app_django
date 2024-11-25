@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthmate APP</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Healthmate APP</h1>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="{% url 'patient_dashboard' %}">Patient Home</a></li>
+                <li><a href="{% url 'patient_profile' %}">Patient Profile</a></li>
+                <li style="background-color: #ffe53b; background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%); color:white; border-radius:5px;padding:0.5rem 1rem;">
+                    <a href="#">Book Appointment</a>
+                </li>
+                <li><a href="{% url 'patient_login' %}">Logout</a></li>
+            </ul>
+        </nav>
+
+        <section>
+            <form actio n="" method="POST" class="appointment-form">
+                {% csrf_token %}
+                <label for="">Patient ID:</label>
+                {{ patient.id }}<br>
+                <label for="">Patient Name:</label>
+                {{ patient.name }}<br>
+            
+                <label for="symptom">Disease</label>
+                <select name="symptom" id="symptoms">
+                    <option value="">--Select Symptoms--</option>
+                    {% for symptom in symptoms %}
+                    <option value="{{ symptom.id }}" {% if selected_symptom and selected_symptom.id == symptom.id %}selected{% endif %}>{{ symptom.symptom_name }}</option>
+                    {% endfor %}
+                </select><br>
+            
+                <label for="symptom_description">Symptoms Description</label>
+                <textarea name="symptom_description" id="symptom_description" cols="30" rows="2" required></textarea><br>
+            
+                <input type="submit" name="refer_doctor" value="Refer Doctor">
+                <input type="submit" name="refer_pharmacy" value="Refer Pharmacy"/>
+
+            </section><br>
+            <section>
+            
+                {% if relevant_doctors %}
+                <h3>Doctors Available for Referral</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Doctor Name</th>
+                            <th>Specialty</th>
+                            <th>Location</th>
+                            <th>Availability</th>
+                            <th>Appointment Date</th> <!-- New column -->
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doctor in relevant_doctors %}
+                        <tr>
+                            <td>{{ doctor.name }}</td>
+                            <td>{{ doctor.specialty }}</td>
+                            <td>{{ doctor.location }}</td>
+                            <td> (9am to 6pm) </td>
+                            <td><input type="date" name="appointment_date" min="{{ today }} required"></td>
+                            <td>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="appointment_date" min=" {{ today }}" required"/>
+                                    <input type="hidden" name="selected_doctor" value="{{ doctor.id }}">
+                                    <input type="hidden" name="symptom" value="{{ selected_symptom.id }}">
+                                    <input type="submit" name="confirm_appointment" value="Book Appointment"/>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% elif relevant_pharmacies %}
+                <h3>Pharmacies Available for Referral</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pharmacy Name</th>
+                            <th>Location</th>
+                            <th>Contact</th>
+                            <th>Zip Code</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pharmacy in relevant_pharmacies %}
+                        <tr>
+                            <td>{{ pharmacy.name }}</td>
+                            <td>{{ pharmacy.location }}</td>
+                            <td>{{ pharmacy.contact_number }}</td>
+                            <td>{{ pharmacy.pin_number}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No pharmacies available for the selected symptom.</p>
+                {% endif %}
+            </form>
+        </section>
+    </div>
+</body>
+</html>

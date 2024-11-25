@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Healthmate APP</h1>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="#">Doctor Home</a></li>
+                <li><a href="{% url 'doctor_profile' %}">Doctor Profile</a></li>
+                <li><a href="{% url 'doctor_login' %}">Logout</a></li>
+            </ul>
+        </nav>
+
+        <section>
+            <center><h1>Welcome, Dr. {{ doctor.name }}</h1></center>
+            {% if appointments %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Symptom</th>
+                        <th>Symptom Description</th>
+                        <th>Appointment Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.patient.name }}</td>
+                        <td>{{ appointment.symptom.symptom_name }}</td>
+                        <td>{{ appointment.symptom_description }}</td>
+                        <td>{{ appointment.appointment_date }}</td>
+                        <td>{{ appointment.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p>No appointments scheduled.</p>
+            {% endif %}
+        </section>
+    </div>
+</body>
+</html>

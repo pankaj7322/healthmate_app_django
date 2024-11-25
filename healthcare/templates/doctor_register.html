@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthmate APP</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Healthmate APP</h1>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li>
+                    <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li style="background-color: #ffe53b;background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%); color:white; border-radius:5px;padding:0.5rem 1rem;">
+                    <a href="{% url 'doctor_login'%}">Doctor</a>
+                </li>
+                <li ><a href="{% url 'patient_login' %}">Patient</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Doctor Registration Form -->
+        <div class="form-container">
+            <h2>Doctor Registration</h2>
+            <center><p style="color:red">{{ message }}</p></center>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Doctor's Name" required><br>
+                <input type="text" name="location" placeholder="Location" required><br>
+                <input type="text" name="pin" placeholder="Zip Code" required><br>
+                <input type="text" name="specialty" placeholder="Specialty" required><br>
+                <input type="text" name="phone_number" placeholder="Phone Number" required><br>
+                <input type="email" name="email" placeholder="Email" required><br>
+                <input type="password" name="password" placeholder="Password" required><br>
+
+                <h3>Symptoms Treated (Select symptoms this doctor can treat):</h3>
+                <div>
+                    {% for symptom in symptoms %}
+                        <input type="checkbox" name="symptoms" value="{{ symptom.id }}"> {{ symptom.symptom_name }}<br>
+                    {% endfor %}
+                </div>
+
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

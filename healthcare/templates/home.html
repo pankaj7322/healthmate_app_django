@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthmate APP</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Healthmate APP</h1>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li
+                    style="background-color: #ffe53b;background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%); color:white; border-radius:5px;padding:0.5rem 1rem;">
+                    <a href="">Home</a></li>
+                <!-- <li ><a href="{% url 'doctor_register'%}">Doctor Registration</a></li> -->
+                <li><a href="{% url 'doctor_login'%}">Doctor</a></li>
+                <!-- <li><a href="{% url 'patient_register' %}">Patient</a></li> -->
+                <li><a href="{% url 'patient_login' %}">Patient</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="middle">
+            <div class="middle2">
+                <div class="box box1">
+                    <div class="up-box">
+                        <img src="{% static 'images/doctor.webp' '%}" alt="" width="500px" height="200px">
+                    </div>
+                    <div class="down-box">
+                        <img src="{% static 'images/patient.avif' '%}" alt="patient" width="500px" height="200px">
+                    </div>
+                </div>
+                <div class="box box2">
+                    This Django project allows patients to select symptoms, find relevant doctors, and confirm
+                    appointments. Patients can view available symptoms, choose a doctor based on their symptoms, and
+                    confirm an appointment. After confirmation, a detailed confirmation page shows the doctor's
+                    information and appointment details
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
